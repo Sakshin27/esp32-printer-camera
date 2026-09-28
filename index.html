@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -278,6 +277,49 @@ input[type="checkbox"] {
 }
 
 
+.flash-controls {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 10px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.flash-on {
+
+    background: #ff9d00;
+
+    color: #111;
+
+}
+
+
+.flash-on:hover {
+
+    background: #ffb52e;
+
+}
+
+
+.flash-off {
+
+    background: #30323a;
+
+}
+
+
+.flash-off:hover {
+
+    background: #444751;
+
+}
+
+
 .note {
 
     color: #888;
@@ -315,6 +357,11 @@ input[type="checkbox"] {
 <div class="main">
 
 
+<!-- =================================================
+     CAMERA
+================================================= -->
+
+
 <div class="camera-box">
 
 <img id="camera"
@@ -328,15 +375,18 @@ FPS:
 <strong id="fps">0</strong>
 </span>
 
+
 <span>
 Frame:
 <strong id="frameSize">0 KB</strong>
 </span>
 
+
 <span>
 Resolution:
 <strong id="resolutionStats">—</strong>
 </span>
+
 
 <span>
 Data:
@@ -348,27 +398,50 @@ Data:
 </div>
 
 
+<!-- =================================================
+     CONTROLS
+================================================= -->
+
+
 <div class="controls">
 
 
 <h2>Camera Controls</h2>
 
 
+<!-- =================================================
+     PRESETS
+================================================= -->
+
+
 <div class="presets">
 
 <button onclick="preset('smooth')">
+
 🟢 Smooth
+
 </button>
+
 
 <button onclick="preset('balanced')">
+
 🟡 Balanced
+
 </button>
 
+
 <button onclick="preset('quality')">
+
 🔵 Quality
+
 </button>
 
 </div>
+
+
+<!-- =================================================
+     RESOLUTION
+================================================= -->
 
 
 <div class="control">
@@ -382,7 +455,9 @@ Resolution
 <span
 class="value"
 id="resolutionValue">
+
 320×240
+
 </span>
 
 </div>
@@ -391,20 +466,33 @@ id="resolutionValue">
 <select id="resolution">
 
 <option value="QVGA">
+
 320×240
+
 </option>
+
 
 <option value="VGA">
+
 640×480
+
 </option>
 
+
 <option value="SVGA">
+
 800×600
+
 </option>
 
 </select>
 
 </div>
+
+
+<!-- =================================================
+     FPS
+================================================= -->
 
 
 <div class="control">
@@ -418,7 +506,9 @@ Frame Rate
 <span
 class="value"
 id="fpsValue">
+
 5 FPS
+
 </span>
 
 </div>
@@ -435,6 +525,11 @@ oninput="updateLabels()">
 </div>
 
 
+<!-- =================================================
+     JPEG QUALITY
+================================================= -->
+
+
 <div class="control">
 
 <div class="control-header">
@@ -446,7 +541,9 @@ JPEG Quality
 <span
 class="value"
 id="qualityValue">
+
 15
+
 </span>
 
 </div>
@@ -463,6 +560,11 @@ oninput="updateLabels()">
 </div>
 
 
+<!-- =================================================
+     BRIGHTNESS
+================================================= -->
+
+
 <div class="control">
 
 <div class="control-header">
@@ -474,7 +576,9 @@ Brightness
 <span
 class="value"
 id="brightnessValue">
+
 0
+
 </span>
 
 </div>
@@ -491,6 +595,11 @@ oninput="updateLabels()">
 </div>
 
 
+<!-- =================================================
+     CONTRAST
+================================================= -->
+
+
 <div class="control">
 
 <div class="control-header">
@@ -502,7 +611,9 @@ Contrast
 <span
 class="value"
 id="contrastValue">
+
 0
+
 </span>
 
 </div>
@@ -519,6 +630,11 @@ oninput="updateLabels()">
 </div>
 
 
+<!-- =================================================
+     SATURATION
+================================================= -->
+
+
 <div class="control">
 
 <div class="control-header">
@@ -530,7 +646,9 @@ Saturation
 <span
 class="value"
 id="saturationValue">
+
 0
+
 </span>
 
 </div>
@@ -547,6 +665,63 @@ oninput="updateLabels()">
 </div>
 
 
+<!-- =================================================
+     FLASH
+================================================= -->
+
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+Flash LED
+</label>
+
+<span
+class="value"
+id="flashValue">
+
+OFF
+
+</span>
+
+</div>
+
+
+<div class="flash-controls">
+
+
+<button
+class="flash-off"
+id="flashOff"
+onclick="setFlash(false)">
+
+💡 Flash OFF
+
+</button>
+
+
+<button
+class="flash-on"
+id="flashOn"
+onclick="setFlash(true)">
+
+🔆 Flash ON
+
+</button>
+
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+     MIRROR
+================================================= -->
+
+
 <div class="checkbox">
 
 <label>
@@ -560,6 +735,11 @@ Mirror horizontally
 </label>
 
 </div>
+
+
+<!-- =================================================
+     FLIP
+================================================= -->
 
 
 <div class="checkbox">
@@ -580,6 +760,11 @@ Flip vertically
 <br>
 
 
+<!-- =================================================
+     APPLY
+================================================= -->
+
+
 <button
 class="apply"
 onclick="applySettings()">
@@ -593,8 +778,13 @@ Apply Camera Settings
 
 Lower resolution and lower JPEG quality
 reduce bandwidth and can improve smoothness.
-The ESP32-CAM is also limited by camera capture
+
+The ESP32-CAM is limited by camera capture
 and Wi-Fi performance.
+
+The onboard flash LED is very bright and
+uses additional power, so keep it OFF when
+you don't need it.
 
 </div>
 
@@ -607,6 +797,10 @@ and Wi-Fi performance.
 <script>
 
 
+// =====================================================
+// WEBSOCKET
+// =====================================================
+
 const WS_URL =
     "wss://esp32-camera-relay-7i0g.onrender.com/ws";
 
@@ -614,17 +808,16 @@ const WS_URL =
 let socket;
 
 
+// =====================================================
+// STATISTICS
+// =====================================================
+
 let frameCount = 0;
 
 let bytesReceived = 0;
 
 let lastStatsTime =
     performance.now();
-
-
-let measuredFPS = 0;
-
-let measuredKBps = 0;
 
 
 const camera =
@@ -639,10 +832,16 @@ const status =
     );
 
 
+// =====================================================
+// CONNECT
+// =====================================================
+
 function connect() {
+
 
     status.textContent =
         "● Connecting...";
+
 
     status.style.color =
         "#ffaa00";
@@ -661,6 +860,7 @@ function connect() {
     socket.onopen =
         function() {
 
+
             console.log(
                 "Connected to relay"
             );
@@ -674,6 +874,7 @@ function connect() {
             status.textContent =
                 "● Connected — waiting for camera";
 
+
             status.style.color =
                 "#00ff88";
 
@@ -684,14 +885,18 @@ function connect() {
         function(event) {
 
 
-            // Text message
+            // -----------------------------------------
+            // TEXT MESSAGE
+            // -----------------------------------------
 
             if (
                 typeof event.data ===
                 "string"
             ) {
 
+
                 try {
+
 
                     const message =
                         JSON.parse(
@@ -704,17 +909,28 @@ function connect() {
                         "camera_status"
                     ) {
 
+
                         if (
                             message.connected
                         ) {
 
+
                             status.textContent =
                                 "● LIVE";
 
-                        } else {
+
+                            status.style.color =
+                                "#00ff88";
+
+
+                        }
+
+                        else {
+
 
                             status.textContent =
                                 "● Camera offline";
+
 
                             status.style.color =
                                 "#ff4444";
@@ -725,7 +941,9 @@ function connect() {
 
                 }
 
+
                 catch {
+
 
                     console.log(
                         "Server:",
@@ -740,7 +958,9 @@ function connect() {
             }
 
 
-            // JPEG frame
+            // -----------------------------------------
+            // JPEG FRAME
+            // -----------------------------------------
 
             const size =
                 event.data.byteLength;
@@ -786,6 +1006,7 @@ function connect() {
             status.textContent =
                 "● LIVE";
 
+
             status.style.color =
                 "#00ff88";
 
@@ -804,8 +1025,10 @@ function connect() {
     socket.onclose =
         function() {
 
+
             status.textContent =
                 "● Disconnected — reconnecting...";
+
 
             status.style.color =
                 "#ff4444";
@@ -828,6 +1051,10 @@ function connect() {
 
 }
 
+
+// =====================================================
+// UPDATE LABELS
+// =====================================================
 
 function updateLabels() {
 
@@ -891,14 +1118,18 @@ function updateLabels() {
     ).textContent =
         saturation;
 
-
 }
 
+
+// =====================================================
+// RESOLUTION LABEL
+// =====================================================
 
 document.getElementById(
     "resolution"
 ).onchange =
     function() {
+
 
         document.getElementById(
             "resolutionValue"
@@ -910,6 +1141,95 @@ document.getElementById(
     };
 
 
+// =====================================================
+// FLASH CONTROL
+// =====================================================
+
+function setFlash(enabled) {
+
+
+    if (
+        !socket ||
+        socket.readyState !==
+        WebSocket.OPEN
+    ) {
+
+
+        alert(
+            "Camera connection is not ready."
+        );
+
+
+        return;
+
+    }
+
+
+    const command = {
+
+        type:
+            "camera_settings",
+
+        flash:
+            enabled
+
+    };
+
+
+    socket.send(
+        JSON.stringify(
+            command
+        )
+    );
+
+
+    const flashValue =
+        document.getElementById(
+            "flashValue"
+        );
+
+
+    if (
+        enabled
+    ) {
+
+
+        flashValue.textContent =
+            "ON";
+
+
+        flashValue.style.color =
+            "#ff9d00";
+
+    }
+
+    else {
+
+
+        flashValue.textContent =
+            "OFF";
+
+
+        flashValue.style.color =
+            "#00ff88";
+
+    }
+
+
+    console.log(
+        "Flash:",
+        enabled
+            ? "ON"
+            : "OFF"
+    );
+
+}
+
+
+// =====================================================
+// APPLY CAMERA SETTINGS
+// =====================================================
+
 function applySettings() {
 
 
@@ -919,9 +1239,11 @@ function applySettings() {
         WebSocket.OPEN
     ) {
 
+
         alert(
             "Camera connection is not ready."
         );
+
 
         return;
 
@@ -933,10 +1255,12 @@ function applySettings() {
         type:
             "camera_settings",
 
+
         resolution:
             document.getElementById(
                 "resolution"
             ).value,
+
 
         fps:
             Number(
@@ -945,12 +1269,14 @@ function applySettings() {
                 ).value
             ),
 
+
         quality:
             Number(
                 document.getElementById(
                     "qualitySlider"
                 ).value
             ),
+
 
         brightness:
             Number(
@@ -959,12 +1285,14 @@ function applySettings() {
                 ).value
             ),
 
+
         contrast:
             Number(
                 document.getElementById(
                     "contrastSlider"
                 ).value
             ),
+
 
         saturation:
             Number(
@@ -973,10 +1301,12 @@ function applySettings() {
                 ).value
             ),
 
+
         hmirror:
             document.getElementById(
                 "mirror"
             ).checked,
+
 
         vflip:
             document.getElementById(
@@ -1013,6 +1343,10 @@ function applySettings() {
 }
 
 
+// =====================================================
+// PRESETS
+// =====================================================
+
 function preset(
     name
 ) {
@@ -1036,16 +1370,23 @@ function preset(
         );
 
 
+    // -----------------------------------------------
+    // SMOOTH
+    // -----------------------------------------------
+
     if (
         name ===
         "smooth"
     ) {
 
+
         resolution.value =
             "QVGA";
 
+
         fps.value =
             8;
+
 
         quality.value =
             18;
@@ -1053,16 +1394,23 @@ function preset(
     }
 
 
+    // -----------------------------------------------
+    // BALANCED
+    // -----------------------------------------------
+
     if (
         name ===
         "balanced"
     ) {
 
+
         resolution.value =
             "VGA";
 
+
         fps.value =
             5;
+
 
         quality.value =
             15;
@@ -1070,16 +1418,23 @@ function preset(
     }
 
 
+    // -----------------------------------------------
+    // QUALITY
+    // -----------------------------------------------
+
     if (
         name ===
         "quality"
     ) {
 
+
         resolution.value =
             "VGA";
 
+
         fps.value =
             2;
+
 
         quality.value =
             10;
@@ -1099,8 +1454,13 @@ function preset(
 }
 
 
+// =====================================================
+// LIVE STATISTICS
+// =====================================================
+
 setInterval(
     function() {
+
 
         const now =
             performance.now();
@@ -1117,12 +1477,13 @@ setInterval(
             elapsed >= 1
         ) {
 
-            measuredFPS =
+
+            const measuredFPS =
                 frameCount /
                 elapsed;
 
 
-            measuredKBps =
+            const measuredKBps =
                 (
                     bytesReceived /
                     1024
@@ -1150,8 +1511,10 @@ setInterval(
             frameCount =
                 0;
 
+
             bytesReceived =
                 0;
+
 
             lastStatsTime =
                 now;
@@ -1159,9 +1522,14 @@ setInterval(
         }
 
     },
+
     500
 );
 
+
+// =====================================================
+// START
+// =====================================================
 
 connect();
 
