@@ -1,109 +1,297 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>3D Printer Camera</title>
+<title>3D Printer Camera</title>
 
-    <style>
 
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
+* {
+    box-sizing: border-box;
+}
 
-            margin: 0;
 
-            background: #111;
+body {
 
-            color: white;
+    margin: 0;
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+    background: #101114;
 
-        }
+    color: white;
 
-        header {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-            padding: 20px;
+}
 
-            background: #1b1b1b;
 
-            border-bottom:
-                1px solid #333;
+header {
 
-        }
+    padding: 18px 24px;
 
-        h1 {
+    background: #191a1f;
 
-            margin: 0;
+    border-bottom:
+        1px solid #30323a;
 
-            font-size: 28px;
+}
 
-        }
 
-        #status {
+h1 {
 
-            margin-top: 8px;
+    margin: 0;
 
-            color: #ffaa00;
+    font-size: 25px;
 
-            font-size: 15px;
+}
 
-        }
 
-        .camera-container {
+#status {
 
-            width: 95%;
+    margin-top: 7px;
 
-            max-width: 1000px;
+    font-size: 14px;
 
-            margin:
-                30px auto;
+    color: #ffaa00;
 
-            text-align: center;
+}
 
-        }
 
-        #camera {
+.main {
 
-            width: 100%;
+    width: 95%;
 
-            max-width: 900px;
+    max-width: 1200px;
 
-            display: block;
+    margin: 25px auto;
 
-            margin: auto;
+}
 
-            background: #222;
 
-            border-radius: 10px;
+.camera-box {
 
-            min-height: 300px;
+    background: #18191e;
 
-            object-fit: contain;
+    border-radius: 12px;
 
-        }
+    padding: 12px;
 
-        .info {
+    text-align: center;
 
-            margin-top: 20px;
+}
 
-            color: #888;
 
-            font-size: 14px;
+#camera {
 
-        }
+    width: 100%;
 
-    </style>
+    max-width: 900px;
+
+    max-height: 70vh;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    background: black;
+
+}
+
+
+.stats {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin-top: 12px;
+
+    color: #aaa;
+
+    font-size: 13px;
+
+}
+
+
+.controls {
+
+    margin-top: 20px;
+
+    background: #191a1f;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+}
+
+
+.controls h2 {
+
+    margin-top: 0;
+
+    font-size: 20px;
+
+}
+
+
+.presets {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+
+}
+
+
+button {
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 10px 15px;
+
+    background: #30323a;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+}
+
+
+button:hover {
+
+    background: #444751;
+
+}
+
+
+.apply {
+
+    background: #1677ff;
+
+}
+
+
+.apply:hover {
+
+    background: #0d63d8;
+
+}
+
+
+.control {
+
+    margin-bottom: 18px;
+
+}
+
+
+.control-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+
+}
+
+
+label {
+
+    font-size: 14px;
+
+    color: #ddd;
+
+}
+
+
+.value {
+
+    color: #00ff88;
+
+    font-weight: bold;
+
+}
+
+
+select,
+input[type="range"] {
+
+    width: 100%;
+
+}
+
+
+select {
+
+    padding: 10px;
+
+    border-radius: 6px;
+
+    background: #292b32;
+
+    color: white;
+
+    border: 1px solid #444;
+
+}
+
+
+input[type="checkbox"] {
+
+    transform:
+        scale(1.2);
+
+    margin-right: 8px;
+
+}
+
+
+.checkbox {
+
+    margin-top: 12px;
+
+}
+
+
+.note {
+
+    color: #888;
+
+    font-size: 12px;
+
+    margin-top: 15px;
+
+    line-height: 1.5;
+
+}
+
+
+</style>
 
 </head>
 
@@ -113,202 +301,871 @@
 
 <header>
 
-    <h1>3D Printer Camera</h1>
+<h1>3D Printer Camera</h1>
 
-    <div id="status">
-        ● Connecting to camera...
-    </div>
+<div id="status">
+
+● Connecting...
+
+</div>
 
 </header>
 
 
-<div class="camera-container">
+<div class="main">
 
-    <img
-        id="camera"
-        alt="Waiting for ESP32-CAM..."
-    >
 
-    <div class="info">
+<div class="camera-box">
 
-        ESP32-CAM • TAPMI Lab
+<img id="camera"
+     alt="Waiting for camera">
 
-    </div>
+
+<div class="stats">
+
+<span>
+FPS:
+<strong id="fps">0</strong>
+</span>
+
+<span>
+Frame:
+<strong id="frameSize">0 KB</strong>
+</span>
+
+<span>
+Resolution:
+<strong id="resolutionStats">—</strong>
+</span>
+
+<span>
+Data:
+<strong id="dataRate">0 KB/s</strong>
+</span>
+
+</div>
+
+</div>
+
+
+<div class="controls">
+
+
+<h2>Camera Controls</h2>
+
+
+<div class="presets">
+
+<button onclick="preset('smooth')">
+🟢 Smooth
+</button>
+
+<button onclick="preset('balanced')">
+🟡 Balanced
+</button>
+
+<button onclick="preset('quality')">
+🔵 Quality
+</button>
+
+</div>
+
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+Resolution
+</label>
+
+<span
+class="value"
+id="resolutionValue">
+320×240
+</span>
+
+</div>
+
+
+<select id="resolution">
+
+<option value="QVGA">
+320×240
+</option>
+
+<option value="VGA">
+640×480
+</option>
+
+<option value="SVGA">
+800×600
+</option>
+
+</select>
+
+</div>
+
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+Frame Rate
+</label>
+
+<span
+class="value"
+id="fpsValue">
+5 FPS
+</span>
+
+</div>
+
+
+<input
+type="range"
+id="fpsSlider"
+min="1"
+max="10"
+value="5"
+oninput="updateLabels()">
+
+</div>
+
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+JPEG Quality
+</label>
+
+<span
+class="value"
+id="qualityValue">
+15
+</span>
+
+</div>
+
+
+<input
+type="range"
+id="qualitySlider"
+min="8"
+max="30"
+value="15"
+oninput="updateLabels()">
+
+</div>
+
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+Brightness
+</label>
+
+<span
+class="value"
+id="brightnessValue">
+0
+</span>
+
+</div>
+
+
+<input
+type="range"
+id="brightnessSlider"
+min="-2"
+max="2"
+value="0"
+oninput="updateLabels()">
+
+</div>
+
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+Contrast
+</label>
+
+<span
+class="value"
+id="contrastValue">
+0
+</span>
+
+</div>
+
+
+<input
+type="range"
+id="contrastSlider"
+min="-2"
+max="2"
+value="0"
+oninput="updateLabels()">
+
+</div>
+
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+Saturation
+</label>
+
+<span
+class="value"
+id="saturationValue">
+0
+</span>
+
+</div>
+
+
+<input
+type="range"
+id="saturationSlider"
+min="-2"
+max="2"
+value="0"
+oninput="updateLabels()">
+
+</div>
+
+
+<div class="checkbox">
+
+<label>
+
+<input
+type="checkbox"
+id="mirror">
+
+Mirror horizontally
+
+</label>
+
+</div>
+
+
+<div class="checkbox">
+
+<label>
+
+<input
+type="checkbox"
+id="flip">
+
+Flip vertically
+
+</label>
+
+</div>
+
+
+<br>
+
+
+<button
+class="apply"
+onclick="applySettings()">
+
+Apply Camera Settings
+
+</button>
+
+
+<div class="note">
+
+Lower resolution and lower JPEG quality
+reduce bandwidth and can improve smoothness.
+The ESP32-CAM is also limited by camera capture
+and Wi-Fi performance.
+
+</div>
+
+
+</div>
 
 </div>
 
 
 <script>
 
-    const WS_URL =
-        "wss://esp32-camera-relay-7i0g.onrender.com/ws";
+
+const WS_URL =
+    "wss://esp32-camera-relay-7i0g.onrender.com/ws";
 
 
-    const camera =
-        document.getElementById("camera");
+let socket;
 
 
-    const status =
-        document.getElementById("status");
+let frameCount = 0;
+
+let bytesReceived = 0;
+
+let lastStatsTime =
+    performance.now();
 
 
-    let socket;
+let measuredFPS = 0;
+
+let measuredKBps = 0;
 
 
-    function connect() {
-
-        status.textContent =
-            "● Connecting to camera...";
-
-        status.style.color =
-            "#ffaa00";
+const camera =
+    document.getElementById(
+        "camera"
+    );
 
 
-        console.log(
-            "Connecting to:",
+const status =
+    document.getElementById(
+        "status"
+    );
+
+
+function connect() {
+
+    status.textContent =
+        "● Connecting...";
+
+    status.style.color =
+        "#ffaa00";
+
+
+    socket =
+        new WebSocket(
             WS_URL
         );
 
 
-        socket =
-            new WebSocket(WS_URL);
+    socket.binaryType =
+        "arraybuffer";
 
 
-        socket.binaryType =
-            "arraybuffer";
-
-
-        socket.onopen = function() {
+    socket.onopen =
+        function() {
 
             console.log(
-                "Connected to Render"
+                "Connected to relay"
+            );
+
+
+            socket.send(
+                "VIEWER"
             );
 
 
             status.textContent =
                 "● Connected — waiting for camera";
 
-
             status.style.color =
                 "#00ff88";
-
-
-            // Identify ourselves as viewer
-            socket.send("VIEWER");
 
         };
 
 
-        socket.onmessage =
-            function(event) {
+    socket.onmessage =
+        function(event) {
 
-                // Server confirmation
-                if (
-                    typeof event.data ===
-                    "string"
-                ) {
+
+            // Text message
+
+            if (
+                typeof event.data ===
+                "string"
+            ) {
+
+                try {
+
+                    const message =
+                        JSON.parse(
+                            event.data
+                        );
+
+
+                    if (
+                        message.type ===
+                        "camera_status"
+                    ) {
+
+                        if (
+                            message.connected
+                        ) {
+
+                            status.textContent =
+                                "● LIVE";
+
+                        } else {
+
+                            status.textContent =
+                                "● Camera offline";
+
+                            status.style.color =
+                                "#ff4444";
+
+                        }
+
+                    }
+
+                }
+
+                catch {
 
                     console.log(
                         "Server:",
                         event.data
                     );
 
-                    return;
-
                 }
 
 
-                // JPEG frame
-                if (
-                    event.data
-                    instanceof ArrayBuffer
-                ) {
+                return;
 
-                    const blob =
-                        new Blob(
-                            [event.data],
-                            {
-                                type:
-                                    "image/jpeg"
-                            }
-                        );
+            }
 
 
-                    const url =
-                        URL.createObjectURL(
-                            blob
-                        );
+            // JPEG frame
+
+            const size =
+                event.data.byteLength;
 
 
-                    camera.onload =
-                        function() {
-
-                            URL.revokeObjectURL(
-                                url
-                            );
-
-                        };
+            bytesReceived +=
+                size;
 
 
-                    camera.src =
-                        url;
+            frameCount++;
 
 
-                    status.textContent =
-                        "● LIVE";
-
-
-                    status.style.color =
-                        "#00ff88";
-
-                }
-
-            };
-
-
-        socket.onclose =
-            function() {
-
-                console.log(
-                    "Disconnected"
+            const blob =
+                new Blob(
+                    [event.data],
+                    {
+                        type:
+                            "image/jpeg"
+                    }
                 );
 
 
-                status.textContent =
-                    "● Disconnected — reconnecting...";
-
-
-                status.style.color =
-                    "#ff4444";
-
-
-                setTimeout(
-                    connect,
-                    5000
+            const url =
+                URL.createObjectURL(
+                    blob
                 );
 
-            };
+
+            camera.onload =
+                function() {
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+
+                };
 
 
-        socket.onerror =
-            function(error) {
+            camera.src =
+                url;
 
-                console.error(
-                    "WebSocket error:",
-                    error
-                );
 
-                socket.close();
+            status.textContent =
+                "● LIVE";
 
-            };
+            status.style.color =
+                "#00ff88";
+
+
+            document.getElementById(
+                "frameSize"
+            ).textContent =
+                (
+                    size / 1024
+                ).toFixed(1)
+                + " KB";
+
+        };
+
+
+    socket.onclose =
+        function() {
+
+            status.textContent =
+                "● Disconnected — reconnecting...";
+
+            status.style.color =
+                "#ff4444";
+
+
+            setTimeout(
+                connect,
+                3000
+            );
+
+        };
+
+
+    socket.onerror =
+        function() {
+
+            socket.close();
+
+        };
+
+}
+
+
+function updateLabels() {
+
+
+    const fps =
+        document.getElementById(
+            "fpsSlider"
+        ).value;
+
+
+    const quality =
+        document.getElementById(
+            "qualitySlider"
+        ).value;
+
+
+    const brightness =
+        document.getElementById(
+            "brightnessSlider"
+        ).value;
+
+
+    const contrast =
+        document.getElementById(
+            "contrastSlider"
+        ).value;
+
+
+    const saturation =
+        document.getElementById(
+            "saturationSlider"
+        ).value;
+
+
+    document.getElementById(
+        "fpsValue"
+    ).textContent =
+        fps + " FPS";
+
+
+    document.getElementById(
+        "qualityValue"
+    ).textContent =
+        quality;
+
+
+    document.getElementById(
+        "brightnessValue"
+    ).textContent =
+        brightness;
+
+
+    document.getElementById(
+        "contrastValue"
+    ).textContent =
+        contrast;
+
+
+    document.getElementById(
+        "saturationValue"
+    ).textContent =
+        saturation;
+
+
+}
+
+
+document.getElementById(
+    "resolution"
+).onchange =
+    function() {
+
+        document.getElementById(
+            "resolutionValue"
+        ).textContent =
+            this.options[
+                this.selectedIndex
+            ].text;
+
+    };
+
+
+function applySettings() {
+
+
+    if (
+        !socket ||
+        socket.readyState !==
+        WebSocket.OPEN
+    ) {
+
+        alert(
+            "Camera connection is not ready."
+        );
+
+        return;
 
     }
 
 
-    connect();
+    const settings = {
+
+        type:
+            "camera_settings",
+
+        resolution:
+            document.getElementById(
+                "resolution"
+            ).value,
+
+        fps:
+            Number(
+                document.getElementById(
+                    "fpsSlider"
+                ).value
+            ),
+
+        quality:
+            Number(
+                document.getElementById(
+                    "qualitySlider"
+                ).value
+            ),
+
+        brightness:
+            Number(
+                document.getElementById(
+                    "brightnessSlider"
+                ).value
+            ),
+
+        contrast:
+            Number(
+                document.getElementById(
+                    "contrastSlider"
+                ).value
+            ),
+
+        saturation:
+            Number(
+                document.getElementById(
+                    "saturationSlider"
+                ).value
+            ),
+
+        hmirror:
+            document.getElementById(
+                "mirror"
+            ).checked,
+
+        vflip:
+            document.getElementById(
+                "flip"
+            ).checked
+
+    };
+
+
+    socket.send(
+        JSON.stringify(
+            settings
+        )
+    );
+
+
+    console.log(
+        "Settings sent:",
+        settings
+    );
+
+
+    document.getElementById(
+        "resolutionStats"
+    ).textContent =
+        document.getElementById(
+            "resolution"
+        ).options[
+            document.getElementById(
+                "resolution"
+            ).selectedIndex
+        ].text;
+
+}
+
+
+function preset(
+    name
+) {
+
+
+    const fps =
+        document.getElementById(
+            "fpsSlider"
+        );
+
+
+    const quality =
+        document.getElementById(
+            "qualitySlider"
+        );
+
+
+    const resolution =
+        document.getElementById(
+            "resolution"
+        );
+
+
+    if (
+        name ===
+        "smooth"
+    ) {
+
+        resolution.value =
+            "QVGA";
+
+        fps.value =
+            8;
+
+        quality.value =
+            18;
+
+    }
+
+
+    if (
+        name ===
+        "balanced"
+    ) {
+
+        resolution.value =
+            "VGA";
+
+        fps.value =
+            5;
+
+        quality.value =
+            15;
+
+    }
+
+
+    if (
+        name ===
+        "quality"
+    ) {
+
+        resolution.value =
+            "VGA";
+
+        fps.value =
+            2;
+
+        quality.value =
+            10;
+
+    }
+
+
+    updateLabels();
+
+
+    resolution.dispatchEvent(
+        new Event(
+            "change"
+        )
+    );
+
+}
+
+
+setInterval(
+    function() {
+
+        const now =
+            performance.now();
+
+
+        const elapsed =
+            (
+                now -
+                lastStatsTime
+            ) / 1000;
+
+
+        if (
+            elapsed >= 1
+        ) {
+
+            measuredFPS =
+                frameCount /
+                elapsed;
+
+
+            measuredKBps =
+                (
+                    bytesReceived /
+                    1024
+                ) /
+                elapsed;
+
+
+            document.getElementById(
+                "fps"
+            ).textContent =
+                measuredFPS.toFixed(
+                    1
+                );
+
+
+            document.getElementById(
+                "dataRate"
+            ).textContent =
+                measuredKBps.toFixed(
+                    1
+                )
+                + " KB/s";
+
+
+            frameCount =
+                0;
+
+            bytesReceived =
+                0;
+
+            lastStatsTime =
+                now;
+
+        }
+
+    },
+    500
+);
+
+
+connect();
 
 </script>
-
 
 </body>
 
