@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ESP32 Printer Camera</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        header {
+            padding: 20px;
+            background: #1b1b1b;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .status {
+            margin-top: 8px;
+            color: #00ff88;
+        }
+
+        .camera-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 15px;
+        }
+
+        #camera {
+            width: 100%;
+            max-width: 900px;
+            border-radius: 10px;
+            background: #222;
+        }
+
+        .info {
+            margin-top: 20px;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>3D Printer Camera</h1>
+    <div class="status">● Camera System</div>
+</header>
+
+<div class="camera-container">
+
+    <img id="camera" src="" alt="Waiting for camera...">
+
+    <div class="info">
+        ESP32-CAM • TAPMI Lab
+    </div>
+
+</div>
+
+</body>
+</html>
