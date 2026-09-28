@@ -1,71 +1,315 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
 
-    <title>ESP32 Printer Camera</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>3D Printer Camera</title>
 
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
+
             margin: 0;
+
             background: #111;
+
             color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
         }
 
         header {
+
             padding: 20px;
+
             background: #1b1b1b;
+
+            border-bottom:
+                1px solid #333;
+
         }
 
         h1 {
+
             margin: 0;
+
             font-size: 28px;
+
         }
 
-        .status {
+        #status {
+
             margin-top: 8px;
-            color: #00ff88;
+
+            color: #ffaa00;
+
+            font-size: 15px;
+
         }
 
         .camera-container {
+
+            width: 95%;
+
             max-width: 1000px;
-            margin: 30px auto;
-            padding: 15px;
+
+            margin:
+                30px auto;
+
+            text-align: center;
+
         }
 
         #camera {
+
             width: 100%;
+
             max-width: 900px;
-            border-radius: 10px;
+
+            display: block;
+
+            margin: auto;
+
             background: #222;
+
+            border-radius: 10px;
+
+            min-height: 300px;
+
+            object-fit: contain;
+
         }
 
         .info {
+
             margin-top: 20px;
-            color: #aaa;
+
+            color: #888;
+
+            font-size: 14px;
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <header>
+
     <h1>3D Printer Camera</h1>
-    <div class="status">● Camera System</div>
+
+    <div id="status">
+        ● Connecting to camera...
+    </div>
+
 </header>
+
 
 <div class="camera-container">
 
-    <img id="camera" src="" alt="Waiting for camera...">
+    <img
+        id="camera"
+        alt="Waiting for ESP32-CAM..."
+    >
 
     <div class="info">
+
         ESP32-CAM • TAPMI Lab
+
     </div>
 
 </div>
 
+
+<script>
+
+    const WS_URL =
+        "wss://esp32-camera-relay-7i0g.onrender.com/ws";
+
+
+    const camera =
+        document.getElementById("camera");
+
+
+    const status =
+        document.getElementById("status");
+
+
+    let socket;
+
+
+    function connect() {
+
+        status.textContent =
+            "● Connecting to camera...";
+
+        status.style.color =
+            "#ffaa00";
+
+
+        console.log(
+            "Connecting to:",
+            WS_URL
+        );
+
+
+        socket =
+            new WebSocket(WS_URL);
+
+
+        socket.binaryType =
+            "arraybuffer";
+
+
+        socket.onopen = function() {
+
+            console.log(
+                "Connected to Render"
+            );
+
+
+            status.textContent =
+                "● Connected — waiting for camera";
+
+
+            status.style.color =
+                "#00ff88";
+
+
+            // Identify ourselves as viewer
+            socket.send("VIEWER");
+
+        };
+
+
+        socket.onmessage =
+            function(event) {
+
+                // Server confirmation
+                if (
+                    typeof event.data ===
+                    "string"
+                ) {
+
+                    console.log(
+                        "Server:",
+                        event.data
+                    );
+
+                    return;
+
+                }
+
+
+                // JPEG frame
+                if (
+                    event.data
+                    instanceof ArrayBuffer
+                ) {
+
+                    const blob =
+                        new Blob(
+                            [event.data],
+                            {
+                                type:
+                                    "image/jpeg"
+                            }
+                        );
+
+
+                    const url =
+                        URL.createObjectURL(
+                            blob
+                        );
+
+
+                    camera.onload =
+                        function() {
+
+                            URL.revokeObjectURL(
+                                url
+                            );
+
+                        };
+
+
+                    camera.src =
+                        url;
+
+
+                    status.textContent =
+                        "● LIVE";
+
+
+                    status.style.color =
+                        "#00ff88";
+
+                }
+
+            };
+
+
+        socket.onclose =
+            function() {
+
+                console.log(
+                    "Disconnected"
+                );
+
+
+                status.textContent =
+                    "● Disconnected — reconnecting...";
+
+
+                status.style.color =
+                    "#ff4444";
+
+
+                setTimeout(
+                    connect,
+                    5000
+                );
+
+            };
+
+
+        socket.onerror =
+            function(error) {
+
+                console.error(
+                    "WebSocket error:",
+                    error
+                );
+
+                socket.close();
+
+            };
+
+    }
+
+
+    connect();
+
+</script>
+
+
 </body>
+
 </html>
