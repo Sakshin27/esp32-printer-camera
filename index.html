@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -30,7 +31,6 @@ body {
         Arial,
         Helvetica,
         sans-serif;
-
 }
 
 
@@ -42,7 +42,6 @@ header {
 
     border-bottom:
         1px solid #30323a;
-
 }
 
 
@@ -51,7 +50,6 @@ h1 {
     margin: 0;
 
     font-size: 25px;
-
 }
 
 
@@ -62,7 +60,6 @@ h1 {
     font-size: 14px;
 
     color: #ffaa00;
-
 }
 
 
@@ -73,7 +70,6 @@ h1 {
     max-width: 1200px;
 
     margin: 25px auto;
-
 }
 
 
@@ -86,7 +82,6 @@ h1 {
     padding: 12px;
 
     text-align: center;
-
 }
 
 
@@ -103,7 +98,6 @@ h1 {
     border-radius: 8px;
 
     background: black;
-
 }
 
 
@@ -122,7 +116,6 @@ h1 {
     color: #aaa;
 
     font-size: 13px;
-
 }
 
 
@@ -135,7 +128,6 @@ h1 {
     border-radius: 12px;
 
     padding: 20px;
-
 }
 
 
@@ -144,7 +136,6 @@ h1 {
     margin-top: 0;
 
     font-size: 20px;
-
 }
 
 
@@ -157,7 +148,6 @@ h1 {
     gap: 10px;
 
     margin-bottom: 22px;
-
 }
 
 
@@ -176,35 +166,30 @@ button {
     cursor: pointer;
 
     font-size: 14px;
-
 }
 
 
 button:hover {
 
     background: #444751;
-
 }
 
 
 .apply {
 
     background: #1677ff;
-
 }
 
 
 .apply:hover {
 
     background: #0d63d8;
-
 }
 
 
 .control {
 
     margin-bottom: 18px;
-
 }
 
 
@@ -215,7 +200,6 @@ button:hover {
     justify-content: space-between;
 
     margin-bottom: 7px;
-
 }
 
 
@@ -224,7 +208,6 @@ label {
     font-size: 14px;
 
     color: #ddd;
-
 }
 
 
@@ -233,7 +216,6 @@ label {
     color: #00ff88;
 
     font-weight: bold;
-
 }
 
 
@@ -241,7 +223,6 @@ select,
 input[type="range"] {
 
     width: 100%;
-
 }
 
 
@@ -256,7 +237,6 @@ select {
     color: white;
 
     border: 1px solid #444;
-
 }
 
 
@@ -266,14 +246,12 @@ input[type="checkbox"] {
         scale(1.2);
 
     margin-right: 8px;
-
 }
 
 
 .checkbox {
 
     margin-top: 12px;
-
 }
 
 
@@ -286,7 +264,6 @@ input[type="checkbox"] {
     margin-top: 10px;
 
     flex-wrap: wrap;
-
 }
 
 
@@ -295,28 +272,94 @@ input[type="checkbox"] {
     background: #ff9d00;
 
     color: #111;
-
 }
 
 
 .flash-on:hover {
 
     background: #ffb52e;
-
 }
 
 
 .flash-off {
 
     background: #30323a;
-
 }
 
 
 .flash-off:hover {
 
     background: #444751;
+}
 
+
+/* ==============================================
+   CAMERA POWER
+   ============================================== */
+
+.camera-power-controls {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 10px;
+
+    flex-wrap: wrap;
+}
+
+
+.camera-on {
+
+    background: #00a86b;
+
+    color: white;
+}
+
+
+.camera-on:hover {
+
+    background: #00c77d;
+}
+
+
+.camera-off {
+
+    background: #c0392b;
+
+    color: white;
+}
+
+
+.camera-off:hover {
+
+    background: #e04b3c;
+}
+
+
+/* ==============================================
+   BATTERY
+   ============================================== */
+
+.battery-box {
+
+    margin-top: 10px;
+
+    padding: 12px;
+
+    background: #24262d;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+}
+
+
+.battery-value {
+
+    color: #00ff88;
+
+    font-weight: bold;
 }
 
 
@@ -329,9 +372,7 @@ input[type="checkbox"] {
     margin-top: 15px;
 
     line-height: 1.5;
-
 }
-
 
 </style>
 
@@ -361,7 +402,6 @@ input[type="checkbox"] {
      CAMERA
 ================================================= -->
 
-
 <div class="camera-box">
 
 <img id="camera"
@@ -371,26 +411,38 @@ input[type="checkbox"] {
 <div class="stats">
 
 <span>
+
 FPS:
+
 <strong id="fps">0</strong>
+
 </span>
 
 
 <span>
+
 Frame:
+
 <strong id="frameSize">0 KB</strong>
+
 </span>
 
 
 <span>
+
 Resolution:
+
 <strong id="resolutionStats">—</strong>
+
 </span>
 
 
 <span>
+
 Data:
+
 <strong id="dataRate">0 KB/s</strong>
+
 </span>
 
 </div>
@@ -402,9 +454,7 @@ Data:
      CONTROLS
 ================================================= -->
 
-
 <div class="controls">
-
 
 <h2>Camera Controls</h2>
 
@@ -412,7 +462,6 @@ Data:
 <!-- =================================================
      PRESETS
 ================================================= -->
-
 
 <div class="presets">
 
@@ -440,21 +489,146 @@ Data:
 
 
 <!-- =================================================
-     RESOLUTION
+     CAMERA POWER
 ================================================= -->
-
 
 <div class="control">
 
 <div class="control-header">
 
 <label>
-Resolution
+
+Camera Power
+
 </label>
 
+
 <span
-class="value"
-id="resolutionValue">
+    class="value"
+    id="cameraPowerStatus">
+
+OFF
+
+</span>
+
+</div>
+
+
+<div class="camera-power-controls">
+
+<button
+    class="camera-off"
+    id="cameraOffBtn"
+    onclick="setCameraPower(false)">
+
+⏹ CAMERA OFF
+
+</button>
+
+
+<button
+    class="camera-on"
+    id="cameraOnBtn"
+    onclick="setCameraPower(true)">
+
+📷 CAMERA ON
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+     BATTERY
+================================================= -->
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+
+Battery
+
+</label>
+
+
+<span
+    class="battery-value"
+    id="batteryStatus">
+
+-- V / --%
+
+</span>
+
+</div>
+
+
+<div class="battery-box">
+
+<div>
+
+Battery Voltage:
+
+<strong
+    id="batteryVoltage">
+
+--
+
+</strong>
+
+V
+
+</div>
+
+
+<div style="margin-top: 5px;">
+
+Battery:
+
+<strong
+    id="batteryPercentage">
+
+--%
+
+</strong>
+
+</div>
+
+
+<div
+    id="batteryMeasureStatus"
+    style="margin-top: 5px; color: #888;">
+
+Last reading available
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+     RESOLUTION
+================================================= -->
+
+<div class="control">
+
+<div class="control-header">
+
+<label>
+
+Resolution
+
+</label>
+
+
+<span
+    class="value"
+    id="resolutionValue">
 
 320×240
 
@@ -494,18 +668,20 @@ id="resolutionValue">
      FPS
 ================================================= -->
 
-
 <div class="control">
 
 <div class="control-header">
 
 <label>
+
 Frame Rate
+
 </label>
 
+
 <span
-class="value"
-id="fpsValue">
+    class="value"
+    id="fpsValue">
 
 5 FPS
 
@@ -515,12 +691,12 @@ id="fpsValue">
 
 
 <input
-type="range"
-id="fpsSlider"
-min="1"
-max="10"
-value="5"
-oninput="updateLabels()">
+    type="range"
+    id="fpsSlider"
+    min="1"
+    max="10"
+    value="5"
+    oninput="updateLabels()">
 
 </div>
 
@@ -529,18 +705,20 @@ oninput="updateLabels()">
      JPEG QUALITY
 ================================================= -->
 
-
 <div class="control">
 
 <div class="control-header">
 
 <label>
+
 JPEG Quality
+
 </label>
 
+
 <span
-class="value"
-id="qualityValue">
+    class="value"
+    id="qualityValue">
 
 15
 
@@ -550,12 +728,12 @@ id="qualityValue">
 
 
 <input
-type="range"
-id="qualitySlider"
-min="8"
-max="30"
-value="15"
-oninput="updateLabels()">
+    type="range"
+    id="qualitySlider"
+    min="8"
+    max="30"
+    value="15"
+    oninput="updateLabels()">
 
 </div>
 
@@ -564,18 +742,20 @@ oninput="updateLabels()">
      BRIGHTNESS
 ================================================= -->
 
-
 <div class="control">
 
 <div class="control-header">
 
 <label>
+
 Brightness
+
 </label>
 
+
 <span
-class="value"
-id="brightnessValue">
+    class="value"
+    id="brightnessValue">
 
 0
 
@@ -585,12 +765,12 @@ id="brightnessValue">
 
 
 <input
-type="range"
-id="brightnessSlider"
-min="-2"
-max="2"
-value="0"
-oninput="updateLabels()">
+    type="range"
+    id="brightnessSlider"
+    min="-2"
+    max="2"
+    value="0"
+    oninput="updateLabels()">
 
 </div>
 
@@ -599,18 +779,20 @@ oninput="updateLabels()">
      CONTRAST
 ================================================= -->
 
-
 <div class="control">
 
 <div class="control-header">
 
 <label>
+
 Contrast
+
 </label>
 
+
 <span
-class="value"
-id="contrastValue">
+    class="value"
+    id="contrastValue">
 
 0
 
@@ -620,12 +802,12 @@ id="contrastValue">
 
 
 <input
-type="range"
-id="contrastSlider"
-min="-2"
-max="2"
-value="0"
-oninput="updateLabels()">
+    type="range"
+    id="contrastSlider"
+    min="-2"
+    max="2"
+    value="0"
+    oninput="updateLabels()">
 
 </div>
 
@@ -634,18 +816,20 @@ oninput="updateLabels()">
      SATURATION
 ================================================= -->
 
-
 <div class="control">
 
 <div class="control-header">
 
 <label>
+
 Saturation
+
 </label>
 
+
 <span
-class="value"
-id="saturationValue">
+    class="value"
+    id="saturationValue">
 
 0
 
@@ -655,12 +839,12 @@ id="saturationValue">
 
 
 <input
-type="range"
-id="saturationSlider"
-min="-2"
-max="2"
-value="0"
-oninput="updateLabels()">
+    type="range"
+    id="saturationSlider"
+    min="-2"
+    max="2"
+    value="0"
+    oninput="updateLabels()">
 
 </div>
 
@@ -669,18 +853,20 @@ oninput="updateLabels()">
      FLASH
 ================================================= -->
 
-
 <div class="control">
 
 <div class="control-header">
 
 <label>
+
 Flash LED
+
 </label>
 
+
 <span
-class="value"
-id="flashValue">
+    class="value"
+    id="flashValue">
 
 OFF
 
@@ -693,9 +879,9 @@ OFF
 
 
 <button
-class="flash-off"
-id="flashOff"
-onclick="setFlash(false)">
+    class="flash-off"
+    id="flashOff"
+    onclick="setFlash(false)">
 
 💡 Flash OFF
 
@@ -703,9 +889,9 @@ onclick="setFlash(false)">
 
 
 <button
-class="flash-on"
-id="flashOn"
-onclick="setFlash(true)">
+    class="flash-on"
+    id="flashOn"
+    onclick="setFlash(true)">
 
 🔆 Flash ON
 
@@ -721,14 +907,13 @@ onclick="setFlash(true)">
      MIRROR
 ================================================= -->
 
-
 <div class="checkbox">
 
 <label>
 
 <input
-type="checkbox"
-id="mirror">
+    type="checkbox"
+    id="mirror">
 
 Mirror horizontally
 
@@ -741,14 +926,13 @@ Mirror horizontally
      FLIP
 ================================================= -->
 
-
 <div class="checkbox">
 
 <label>
 
 <input
-type="checkbox"
-id="flip">
+    type="checkbox"
+    id="flip">
 
 Flip vertically
 
@@ -764,10 +948,9 @@ Flip vertically
      APPLY
 ================================================= -->
 
-
 <button
-class="apply"
-onclick="applySettings()">
+    class="apply"
+    onclick="applySettings()">
 
 Apply Camera Settings
 
@@ -785,6 +968,13 @@ and Wi-Fi performance.
 The onboard flash LED is very bright and
 uses additional power, so keep it OFF when
 you don't need it.
+
+Battery percentage is an approximate
+voltage-based estimate.
+
+The battery is measured every 30 minutes.
+During measurement, Wi-Fi is temporarily
+turned off because GPIO13 uses ADC2.
 
 </div>
 
@@ -881,6 +1071,10 @@ function connect() {
         };
 
 
+    // =================================================
+    // MESSAGE
+    // =================================================
+
     socket.onmessage =
         function(event) {
 
@@ -894,7 +1088,6 @@ function connect() {
                 "string"
             ) {
 
-
                 try {
 
 
@@ -903,6 +1096,10 @@ function connect() {
                             event.data
                         );
 
+
+                    // ---------------------------------
+                    // CAMERA STATUS
+                    // ---------------------------------
 
                     if (
                         message.type ===
@@ -914,23 +1111,19 @@ function connect() {
                             message.connected
                         ) {
 
-
                             status.textContent =
-                                "● LIVE";
-
+                                "● Camera connected";
 
                             status.style.color =
                                 "#00ff88";
 
-
                         }
+
 
                         else {
 
-
                             status.textContent =
                                 "● Camera offline";
-
 
                             status.style.color =
                                 "#ff4444";
@@ -939,11 +1132,44 @@ function connect() {
 
                     }
 
+
+                    // ---------------------------------
+                    // CAMERA POWER
+                    // ---------------------------------
+
+                    if (
+                        message.type ===
+                        "camera_power"
+                    ) {
+
+                        updateCameraPowerDisplay(
+                            message.enabled
+                        );
+
+                    }
+
+
+                    // ---------------------------------
+                    // BATTERY
+                    // ---------------------------------
+
+                    if (
+                        message.type ===
+                        "battery"
+                    ) {
+
+                        updateBatteryDisplay(
+                            message.voltage,
+                            message.percentage,
+                            message.measuring
+                        );
+
+                    }
+
                 }
 
 
                 catch {
-
 
                     console.log(
                         "Server:",
@@ -992,6 +1218,7 @@ function connect() {
             camera.onload =
                 function() {
 
+
                     URL.revokeObjectURL(
                         url
                     );
@@ -1022,6 +1249,10 @@ function connect() {
         };
 
 
+    // =================================================
+    // CLOSE
+    // =================================================
+
     socket.onclose =
         function() {
 
@@ -1042,12 +1273,300 @@ function connect() {
         };
 
 
+    // =================================================
+    // ERROR
+    // =================================================
+
     socket.onerror =
         function() {
 
             socket.close();
 
         };
+
+}
+
+
+// =====================================================
+// CAMERA POWER
+// =====================================================
+
+function setCameraPower(enabled) {
+
+
+    if (
+        !socket ||
+        socket.readyState !==
+        WebSocket.OPEN
+    ) {
+
+        alert(
+            "Camera connection is not ready."
+        );
+
+        return;
+    }
+
+
+    const command = {
+
+        type:
+            "camera_settings",
+
+        cameraEnabled:
+            enabled
+
+    };
+
+
+    socket.send(
+        JSON.stringify(
+            command
+        )
+    );
+
+
+    updateCameraPowerDisplay(
+        enabled
+    );
+
+
+    console.log(
+        "Camera power:",
+        enabled
+            ? "ON"
+            : "OFF"
+    );
+
+}
+
+
+// =====================================================
+// CAMERA POWER DISPLAY
+// =====================================================
+
+function updateCameraPowerDisplay(
+    enabled
+) {
+
+
+    const powerStatus =
+        document.getElementById(
+            "cameraPowerStatus"
+        );
+
+
+    const onButton =
+        document.getElementById(
+            "cameraOnBtn"
+        );
+
+
+    const offButton =
+        document.getElementById(
+            "cameraOffBtn"
+        );
+
+
+    if (!powerStatus) {
+        return;
+    }
+
+
+    if (enabled) {
+
+        powerStatus.textContent =
+            "ON";
+
+
+        powerStatus.style.color =
+            "#00ff88";
+
+
+        if (onButton) {
+
+            onButton.style.opacity =
+                "1";
+        }
+
+
+        if (offButton) {
+
+            offButton.style.opacity =
+                "0.5";
+        }
+
+    }
+
+
+    else {
+
+        powerStatus.textContent =
+            "OFF";
+
+
+        powerStatus.style.color =
+            "#ff4444";
+
+
+        if (onButton) {
+
+            onButton.style.opacity =
+                "0.5";
+        }
+
+
+        if (offButton) {
+
+            offButton.style.opacity =
+                "1";
+        }
+
+
+        // Stop showing old stream image
+        // while camera is off.
+
+        camera.removeAttribute(
+            "src"
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// BATTERY DISPLAY
+// =====================================================
+
+function updateBatteryDisplay(
+    voltage,
+    percentage,
+    measuring
+) {
+
+
+    const batteryStatus =
+        document.getElementById(
+            "batteryStatus"
+        );
+
+
+    const batteryVoltage =
+        document.getElementById(
+            "batteryVoltage"
+        );
+
+
+    const batteryPercentage =
+        document.getElementById(
+            "batteryPercentage"
+        );
+
+
+    const measureStatus =
+        document.getElementById(
+            "batteryMeasureStatus"
+        );
+
+
+    if (measuring) {
+
+        if (batteryStatus) {
+
+            batteryStatus.textContent =
+                "Measuring...";
+
+        }
+
+
+        if (measureStatus) {
+
+            measureStatus.textContent =
+                "Wi-Fi temporarily OFF — measuring battery";
+
+            measureStatus.style.color =
+                "#ffaa00";
+        }
+
+
+        return;
+    }
+
+
+    // Voltage
+
+    if (batteryVoltage) {
+
+        batteryVoltage.textContent =
+            Number(voltage).toFixed(2);
+    }
+
+
+    // Percentage
+
+    if (batteryPercentage) {
+
+        batteryPercentage.textContent =
+            percentage + "%";
+    }
+
+
+    // Combined value
+
+    if (batteryStatus) {
+
+        batteryStatus.textContent =
+            Number(voltage).toFixed(2)
+            + " V / "
+            + percentage
+            + "%";
+
+
+        if (
+            percentage <= 20
+        ) {
+
+            batteryStatus.style.color =
+                "#ff4444";
+
+        }
+
+        else if (
+            percentage <= 40
+        ) {
+
+            batteryStatus.style.color =
+                "#ffaa00";
+
+        }
+
+        else {
+
+            batteryStatus.style.color =
+                "#00ff88";
+        }
+
+    }
+
+
+    // Measurement status
+
+    if (measureStatus) {
+
+        const now =
+            new Date();
+
+
+        measureStatus.textContent =
+            "Last battery reading: "
+            +
+            now.toLocaleTimeString();
+
+
+        measureStatus.style.color =
+            "#888";
+    }
 
 }
 
@@ -1202,6 +1721,7 @@ function setFlash(enabled) {
             "#ff9d00";
 
     }
+
 
     else {
 
@@ -1379,18 +1899,14 @@ function preset(
         "smooth"
     ) {
 
-
         resolution.value =
             "QVGA";
-
 
         fps.value =
             8;
 
-
         quality.value =
             18;
-
     }
 
 
@@ -1403,18 +1919,14 @@ function preset(
         "balanced"
     ) {
 
-
         resolution.value =
             "VGA";
-
 
         fps.value =
             5;
 
-
         quality.value =
             15;
-
     }
 
 
@@ -1427,18 +1939,14 @@ function preset(
         "quality"
     ) {
 
-
         resolution.value =
             "VGA";
-
 
         fps.value =
             2;
 
-
         quality.value =
             10;
-
     }
 
 
@@ -1505,7 +2013,8 @@ setInterval(
                 measuredKBps.toFixed(
                     1
                 )
-                + " KB/s";
+                +
+                " KB/s";
 
 
             frameCount =
@@ -1531,9 +2040,12 @@ setInterval(
 // START
 // =====================================================
 
+updateLabels();
+
 connect();
 
 </script>
+
 
 </body>
 
